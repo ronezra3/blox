@@ -1,17 +1,41 @@
 var express = require('express');
 var router = express.Router();
 
-var model = require("../models/index");
+var coursesController = require("../controllers/courses");
 
+router.get('/course', (req, res) => {
 
-router.get('/course', model.courses.getAll);
+    let course = coursesController.getAll();
+    
+    res.json(courses);
+});
 
-router.get('/course/:id', model.courses.getById);
+router.get('/course/:id', (req, res) => {
+    let courseId = req.params.id;
 
-router.put('/course/:id', model.courses.update);
+    let course = coursesController.update(courseId);
+    
+    res.json(courses);
+});
 
-router.delete('/course/:id', model.courses.delete);
+router.put('/course/:id', (req, res) => {
+    let courseId = req.params.id;
+    let updateItems = req.body;
 
-router.post('/course', model.courses.create);
+    let course = coursesController.update(courseId, updateItems);
+    
+    res.json(courses);
+});
+
+router.delete('/course/:id', (req, res) => {
+    let courseId = req.params.id;
+    let course = coursesController.delete(courseId);
+    res.json(courses);
+});
+
+router.post('/course', (req, res) => {
+    let newCourse = coursesController.create();
+    res.json(newCourse);
+});
 
 module.exports = router;
