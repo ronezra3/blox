@@ -24,13 +24,6 @@ module.exports = {
 
     },
 
-    delete(courseId) {
-
-        coursesStore = coursesStore.filter(course => course.id !== courseId);
-
-        return 204;
-    },
-
     create() {
         let newCourse = { id: coursesStore.length.toString(36) }
         coursesStore.push(newCourse);

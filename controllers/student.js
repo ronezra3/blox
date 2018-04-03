@@ -1,17 +1,5 @@
 studentsStore = require('../stores/studentsStore');
 
-function responseHandler(res, dataItem, status) {
-    if (status) {
-        res.sendStatus(status);
-    }
-    else if ((Array.isArray(dataItem) && dataItem.length) || (!Array.isArray(dataItem) && dataItem)) {
-        res.json(dataItem);
-    }
-    else {
-        res.sendStatus(404);//.send("Item not found");
-    }
-}
-
 module.exports = {
     create() {
         let currentStudent = {
@@ -113,11 +101,6 @@ module.exports = {
         }
 
     },
-
-    delete(userId) {
-        studentsStore = studentsStore.filter(student => student.id !== userId);
-        return 204;
-    }
 
 }
 

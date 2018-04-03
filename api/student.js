@@ -67,7 +67,7 @@ router.put('/student/:studentId/course/:courseId', (req, res) => {
 router.put('/student/course/:courseId', (req, res) => {
     let courseId = req.params.courseId;
 
-    let student = studentsController.subscribeAllStudents(courseId);
+    studentsController.subscribeAllStudents(courseId);
 
     res.status(204)
 });
@@ -85,14 +85,5 @@ router.put('/student/grade/:grade/:studentId/:courseId', (req, res) => {
     }
     
 });
-
-router.delete('/student/:id', (req, res) => {
-    let userId = req.params.id;
-
-    let studentResponse = studentsController.delete(userId); //TODO
-
-    res.status(204);
-});
-
 
 module.exports = router;

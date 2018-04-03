@@ -38,12 +38,6 @@ router.put('/course/:id', (req, res) => {
 
 });
 
-router.delete('/course/:id', (req, res) => {
-    let courseId = req.params.id;
-    let course = coursesController.delete(courseId);
-    res.status(204)
-});
-
 router.post('/course', (req, res) => {
     let newCourse = coursesController.create();
     res.json(newCourse);
