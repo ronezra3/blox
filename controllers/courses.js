@@ -1,16 +1,4 @@
-coursesStore = [];
-
-function responseHandler(res, dataItem, status) {
-    if (status) {
-        res.sendStatus(status);
-    }
-    else if ((Array.isArray(dataItem) && dataItem.length) || (!Array.isArray(dataItem) && dataItem)) {
-        res.json(dataItem);
-    }
-    else {
-        res.sendStatus(404);//.send("Item not found");
-    }
-}
+coursesStore = require('../stores/coursesStore');
 
 module.exports = {
 
@@ -19,19 +7,19 @@ module.exports = {
     },
 
     getById(courseId) {
-        let currentCourse = courseStore.find(course => course.id === coursetId)
+        let currentCourse = coursesStore.find(course => course.id === courseId)
         return currentCourse;
     },
 
     update(courseId, updateItems) {
         let currentCourse = coursesStore.find(course => course.id === courseId);
 
-        if (currentStudent) {
-            Object.assign(currentStudent, updateItems)
-            return currentStudent;
+        if (currentCourse) {
+            Object.assign(currentCourse, updateItems)
+            return currentCourse;
         }
         else {
-            return "Not found" //TODO
+            return 404;
         }
 
     },
@@ -40,7 +28,7 @@ module.exports = {
 
         coursesStore = coursesStore.filter(course => course.id !== courseId);
 
-        return coursesStore;
+        return 204;
     },
 
     create() {

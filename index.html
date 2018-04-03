@@ -18,7 +18,7 @@
         var app = angular.module('myApp', []);
         app.controller('myCtrl', function ($scope, $http) {
             ///0/course/0
-            $http.delete("http://localhost:3000/student/0", JSON.stringify({ name: "ron" }))
+            $http.delete("http://localhost:3000/course/0", JSON.stringify({ name: "ron" }))
             // $http.put("http://localhost:3000/student/grade/97/0/0", JSON.stringify({ name: "ron" }))
                 .then(function (response) {
                     $scope.myWelcome = response.data;

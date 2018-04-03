@@ -10,7 +10,7 @@ router.post('/student', (req, res) => {
     res.json(newStudent);
 });
 
-router.get('/student', (req, res) => {  
+router.get('/student', (req, res) => {
     let students = studentsController.getAll();
     res.json(students);
 });
@@ -37,17 +37,31 @@ router.put('/student/:id', (req, res) => {
     let studentId = req.params.id;
     let updateItems = req.body;
 
-    let student = studentsController.update(studentId, updateItems);
-    res.json(student);
+    let studentResponse = studentsController.update(studentId, updateItems);
+    if (studentResponse === 404) {
+        res.status(404).send({ error: "Student not found" });
+    }
+    else {
+        res.json(studentResponse);
+    }
+
 });
 
 router.put('/student/:studentId/course/:courseId', (req, res) => {
     let studentId = req.params.studentId;
     let courseId = req.params.courseId;
 
-    let student = studentsController.updateCourseSubscribe(studentId, courseId);
+    let studentResponse = studentsController.updateCourseSubscribe(studentId, courseId);
+    if (studentResponse === 404) {
+        res.status(404).send({ error: "Student not found" });
+    }
+    else if (studentResponse === 304) {
+        res.status(304).send({ error: "Student already subscribed" });
+    }
+    else {
+        res.json(studentResponse);
+    }
 
-    res.json(student);
 });
 
 router.put('/student/course/:courseId', (req, res) => {
@@ -55,24 +69,29 @@ router.put('/student/course/:courseId', (req, res) => {
 
     let student = studentsController.subscribeAllStudents(courseId);
 
-    res.json(student);
+    res.status(204)
 });
 
 router.put('/student/grade/:grade/:studentId/:courseId', (req, res) => {
     let studentId = req.params.studentId;
     let courseId = req.params.courseId;
     let grade = req.params.grade;
-    let student = studentsController.updateGrade(studentId, courseId, grade);
-
-    res.json(student);
+    let studentResponse = studentsController.updateGrade(studentId, courseId, grade);
+    if(studentResponse === 404) {
+        res.status(404).send({ error: "Student or course not found" });
+    }
+    else {
+        res.json(studentResponse);
+    }
+    
 });
 
 router.delete('/student/:id', (req, res) => {
     let userId = req.params.id;
 
-    let student = studentsController.delete(userId); //TODO
+    let studentResponse = studentsController.delete(userId); //TODO
 
-    res.json(student); //TODO
+    res.status(204);
 });
 
 

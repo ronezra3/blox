@@ -1,4 +1,4 @@
-studentsStore = [];
+studentsStore = require('../stores/studentsStore');
 
 function responseHandler(res, dataItem, status) {
     if (status) {
@@ -53,13 +53,12 @@ module.exports = {
             return currentStudent;
         }
         else {
-            return "Not found" //TODO
+            return 404
         }
 
     },
 
     updateCourseSubscribe(studentId, courseId) {
-
 
         let currentStudent = studentsStore.find(student => student.id === studentId);
 
@@ -72,11 +71,11 @@ module.exports = {
                 return currentStudent;
             }
             else {
-                return "Exist" //TODO
+                return 304;
             }
         }
         else {
-            return "Not found" //TODO
+            return 404;
         }
 
     },
@@ -90,7 +89,7 @@ module.exports = {
                 })
             }
         })
-        return "Update" //TODO
+        return 204;
 
     },
 
@@ -106,18 +105,18 @@ module.exports = {
                 return currentStudent;
             }
             else {
-                return "Course not found" //TODO
+                return 404;
             }
         }
         else {
-            return "User not found" //TODO
+            return 404;
         }
 
     },
 
     delete(userId) {
         studentsStore = studentsStore.filter(student => student.id !== userId);
-        return studentsStore;
+        return 204;
     }
 
 }

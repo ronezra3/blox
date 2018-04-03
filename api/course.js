@@ -6,31 +6,42 @@ var coursesController = require("../controllers/courses");
 router.get('/course', (req, res) => {
 
     let course = coursesController.getAll();
-    
+
     res.json(courses);
 });
 
 router.get('/course/:id', (req, res) => {
     let courseId = req.params.id;
 
-    let course = coursesController.update(courseId);
-    
-    res.json(courses);
+    let courseResponse = coursesController.getById(courseId);
+    if (courseResponse) {
+        res.json(courseResponse);
+    }
+    else {
+        res.status(404).send({ error: "Course not found" });
+    }
+
 });
 
 router.put('/course/:id', (req, res) => {
     let courseId = req.params.id;
     let updateItems = req.body;
 
-    let course = coursesController.update(courseId, updateItems);
-    
-    res.json(courses);
+    let courseResponse = coursesController.update(courseId, updateItems);
+
+    if (courseResponse === 404) {
+        res.status(404).send({ error: "Course not found" });
+    }
+    else {
+        res.json(courseResponse);
+    }
+
 });
 
 router.delete('/course/:id', (req, res) => {
     let courseId = req.params.id;
     let course = coursesController.delete(courseId);
-    res.json(courses);
+    res.status(204)
 });
 
 router.post('/course', (req, res) => {
